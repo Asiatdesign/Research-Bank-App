@@ -56,7 +56,7 @@ fetchData();
 // print data to the UI
 function printToUi() {
   // clear the section before printing to avoid duplicates
-  itemSection.innerHTML = "";
+  itemSection.innerHTML = " ";
 
   researchItemArray.forEach(function (item) {
     let nameOfItemTOPrint = item.itemNAME;
@@ -70,12 +70,12 @@ function printToUi() {
     titleAndDeleteContainer.classList.add("title-and-delete-container");
     let anchorTag = document.createElement("a");
     anchorTag.textContent = nameOfItemTOPrint;
-    anchorTag.setAttribute("href", linkToItemTOPrint);
+    anchorTag.setAttribute("href", `${linkToItemTOPrint}`);
     anchorTag.setAttribute("target", "_blank");
 
     let deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-trash");
-
+    deleteIcon.setAttribute("onClick", `deleteItem("${linkToItemTOPrint}")`);
     let descriptionItem = document.createElement("div");
     descriptionItem.classList.add("description-item");
     let descriptionParagraph = document.createElement("p");
@@ -89,3 +89,18 @@ function printToUi() {
   });
 }
 printToUi();
+
+// delete item from the list
+function deleteItem(researchLink) {
+  researchItemArray.forEach(function (item, index) {
+    if (item.itemLINK === researchLink) {
+      researchItemArray.splice(index, 1);
+    }
+  });
+
+  // update localStorage after deletion
+  localStorage.setItem("anotherResearch", JSON.stringify(researchItemArray));
+
+  // fetch item from localStorage
+  fetchData();
+}
