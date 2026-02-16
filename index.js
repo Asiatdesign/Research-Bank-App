@@ -75,7 +75,9 @@ function printToUi() {
 
     let deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-trash");
-    deleteIcon.setAttribute("onClick", `deleteItem("${linkToItemTOPrint}")`);
+
+    deleteIcon.setAttribute("onClick", `deleteItem('${linkToItemTOPrint}')`);
+
     let descriptionItem = document.createElement("div");
     descriptionItem.classList.add("description-item");
     let descriptionParagraph = document.createElement("p");
@@ -93,14 +95,13 @@ printToUi();
 // delete item from the list
 function deleteItem(researchLink) {
   researchItemArray.forEach(function (item, index) {
-    if (item.itemLINK === researchLink) {
+    let descriptionOfItemTOPrint = item.itemDESCRIPTION;
+    if (item.itemLink === researchLink) {
       researchItemArray.splice(index, 1);
     }
+    // update localStorage after deletion
+    let researchItemArrayJSON = JSON.stringify(researchItemArray);
+    localStorage.setItem("anotherResearch", researchItemArrayJSON);
+    printToUi();
   });
-
-  // update localStorage after deletion
-  localStorage.setItem("anotherResearch", JSON.stringify(researchItemArray));
-
-  // fetch item from localStorage
-  fetchData();
 }
