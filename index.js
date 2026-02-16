@@ -94,14 +94,13 @@ printToUi();
 
 // delete item from the list
 function deleteItem(researchLink) {
-  researchItemArray.forEach(function (item, index) {
-    let descriptionOfItemTOPrint = item.itemDESCRIPTION;
-    if (item.itemLink === researchLink) {
-      researchItemArray.splice(index, 1);
+  for (let i = 0; i < researchItemArray.length; i++) {
+    if (researchItemArray[i].itemLINK === researchLink) {
+      researchItemArray.splice(i, 1);
     }
-    // update localStorage after deletion
-    let researchItemArrayJSON = JSON.stringify(researchItemArray);
-    localStorage.setItem("anotherResearch", researchItemArrayJSON);
-    printToUi();
-  });
+  }
+  // update localStorage after deletion
+  let researchItemArrayJSON = JSON.stringify(researchItemArray);
+  localStorage.setItem("anotherResearch", researchItemArrayJSON);
+  printToUi();
 }
